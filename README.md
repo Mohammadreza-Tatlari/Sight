@@ -1,1 +1,1 @@
-Sight is just a practices project which is going to be look like the twitch as a steaming app
+Sight is just a practices project which is going to be look like the twitch as a streaming app
