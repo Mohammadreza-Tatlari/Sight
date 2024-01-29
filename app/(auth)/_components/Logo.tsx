@@ -19,7 +19,7 @@ export function Logo() {
                 Sight
             </p>
             <p className="text-sm text-muted-foreground">
-                come to me
+            иди ко мне
             </p>
         </div>
       </div>
