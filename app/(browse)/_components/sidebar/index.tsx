@@ -2,7 +2,7 @@ import { getRecommended } from '@/lib/recommended-service'
 
 import Wrapper from './wrapper'
 import Toggle from './Toggle'
-import Recommended from './recommended'
+import Recommended, { RecommendedSkeleton } from './recommended'
 
 export default async function Sidebar() {
   const recommended = await getRecommended()
@@ -13,5 +13,16 @@ export default async function Sidebar() {
         <Recommended data={recommended} />
         </div>
     </Wrapper>
+  )
+}
+
+export function SidebarSkeleton() {
+  return(
+    <>
+    {/* this skeleton will fix the first width initiate of sidebar */}
+    <aside className='fixed left-0 flex flex-col w-[70px] lg:w-60 h-full bg-background border-r border-[#2D2E35] z-50'>
+    <RecommendedSkeleton />
+    </aside>
+    </>
   )
 }
