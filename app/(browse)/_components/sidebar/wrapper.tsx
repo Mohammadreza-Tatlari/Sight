@@ -3,6 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useIsClient } from "usehooks-ts";
 
 import { useSidebar } from "@/store/use-sidebar";
 import { cn } from "@/lib/utils";
@@ -14,15 +15,17 @@ interface WrapperProps {
 }
 
 export default function Wrapper({ children }: WrapperProps) {
-  const [isClient, setIsClient] = useState(false);
   const { collapsed } = useSidebar((state) => state);
-
+  
   //this useEffect and snippet code is provided for hydration errors because the wrapper is
   //being loaded inside a SC and the SC does not have access to states that may return error
-
+  /* const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
-  });
+  }); */
+
+  //also usehooks-ts can be used instead of useEffect above
+  const isClient = useIsClient()
 
   if (!isClient) {
     return (
