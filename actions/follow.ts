@@ -1,10 +1,14 @@
-'use server'
+//using use server in order to make it works and also add to security to treat it
+//as an API route and protect it from spilling into js bundle
+"use server";
 import { followUser } from "@/lib/follow-service";
+//using revalidatepath to update global states and memory cache
 import { revalidatePath } from 'next/cache';
 
-export async function onFollow(id: string) {
+export const onFollow = async (id: string) => {
     try {
         const followedUser = await followUser(id);
+        console.log(followedUser);
 
         revalidatePath('/');
 
@@ -14,5 +18,6 @@ export async function onFollow(id: string) {
         return followedUser;
     } catch (error) {
         throw new Error("Internal Error")
+
     }
 }

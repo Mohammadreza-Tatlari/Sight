@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { db } from "./db";
 import { getSelf } from "./auth-service";
 
 export async function isFollowingUser(id: string) {
@@ -53,7 +53,7 @@ export async function followUser(id: string) {
         },
     });
 
-    if(!existingFollow) {
+    if(existingFollow) {
         throw new Error("Already following")
     }
 
@@ -70,3 +70,4 @@ export async function followUser(id: string) {
 
     return follow;
 } 
+
