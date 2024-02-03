@@ -15,7 +15,7 @@ export async function isFollowingUser(id: string) {
         if (otherUser.id == self.id) {
             return true;
         }
- 
+
         const existingFollow = await db.follow.findFirst({
             where: {
                 followerId: self.id,
@@ -35,14 +35,14 @@ export async function followUser(id: string) {
     const self = await getSelf();
 
     const otherUser = await db.user.findUnique({
-        where: {id},
+        where: { id },
     });
 
-    if(!otherUser) {
+    if (!otherUser) {
         throw new Error("User not Found")
     }
 
-    if(otherUser.id === self.id){
+    if (otherUser.id === self.id) {
         throw new Error("self cannot be followed")
     }
 
@@ -53,7 +53,7 @@ export async function followUser(id: string) {
         },
     });
 
-    if(existingFollow) {
+    if (existingFollow) {
         throw new Error("Already following")
     }
 
@@ -69,5 +69,48 @@ export async function followUser(id: string) {
     });
 
     return follow;
-} 
+}
+
+//action for unfollow
+export async function unfollowUser(id: string) {
+    const self = await getSelf();
+
+    const otherUser = await db.user.findUnique({
+        where: {
+            id
+        }
+    })
+
+    if (!otherUser) {
+        throw new Error("User not Found");
+    }
+
+    if (otherUser.id === self.id) {
+        throw new Error("self cannot be unfollowed")
+    }
+
+    //if user is following the user that wants to unfollow
+    const existingFollow = await db.follow.findFirst({
+        where: {
+            followerId: self.id,
+            followingId: otherUser.id
+        }
+    })
+
+    if (!existingFollow) {
+        throw new Error("Not following")
+    }
+
+    const follow = await db.follow.delete({
+        where: {
+            id: existingFollow.id
+        },
+        include: {
+            following: true,
+        }
+    })
+
+    return follow
+}
+
 
