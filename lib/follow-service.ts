@@ -7,17 +7,24 @@ export async function getFollowedUser() {
         const self = await getSelf()
 
         const allFollowedUsers = db.follow.findMany({
-            where:{
-                followerId: self.id
+            where: {
+                followerId: self.id,
+                following: {
+                    blocking: {
+                        none: {
+                            blockedId: self.id
+                        }
+                    }
+                }
             },
-            include:{
+            include: {
                 following: true
             }
         })
         return allFollowedUsers;
     } catch (error) {
         //returns empty array for logged out users
-     return [];    
+        return [];
     }
 }
 
@@ -36,10 +43,19 @@ export async function isFollowingUser(id: string) {
             return true;
         }
 
-        const existingFollow = await db.follow.findFirst({
+        // const existingFollow = await db.follow.findFirst({
+        //     where: {
+        //         followerId: self.id,
+        //         followingId: otherUser.id
+        //     }
+        // })
+
+        const existingFollow = await db.follow.findUnique({
             where: {
-                followerId: self.id,
-                followingId: otherUser.id
+                followerId_followingId: {
+                    followerId: self.id,
+                    followingId: otherUser.id
+                }
             }
         })
 

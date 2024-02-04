@@ -1,4 +1,5 @@
 "use client";
+import { onBlock, onUnblock } from "@/actions/block";
 //built in RPC allow us API less mutation
 // it is a server action
 import { onFollow, onUnfollow } from "@/actions/follow";
@@ -23,8 +24,7 @@ export default function Actions({ isFollowing, userId }: ActionsPorps) {
         .catch((error) => {
           toast.error("Something went wrong");
         });
-        
-  });
+    });
   }
 
   function handleUnfollow() {
@@ -36,27 +36,31 @@ export default function Actions({ isFollowing, userId }: ActionsPorps) {
         .catch((error) => {
           toast.error("Something went wrong");
         });
-        
-  });
+    });
   }
 
-  function OnClick(){
-    if(isFollowing) {
-      handleUnfollow()
-    }
-    else{
+  function OnClick() {
+    if (isFollowing) {
+      handleUnfollow();
+    } else {
       handleFollow();
     }
   }
 
+  function handleBlock(){
+    startTransition(() => {
+      onUnblock(userId)
+      .then((data) => toast.success(`unBlocked User ${data.blocked.username}`))
+      .catch(() => toast.error('something went wrong'))
+    })
+  }
 
   return (
-    <Button
-      disabled={isPending}
-      onClick={OnClick}
-      variant="primay"
-    >
-      {isFollowing ? "Unfollow" : "Follow"}
-    </Button>
+    <>
+      <Button disabled={isPending} onClick={OnClick} variant="primay">
+        {isFollowing ? "Unfollow" : "Follow"}
+      </Button>
+      <Button onClick={handleBlock} disabled={isPending}>unBlock</Button>
+    </>
   );
 }
