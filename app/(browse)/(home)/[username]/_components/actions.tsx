@@ -10,9 +10,10 @@ import { toast } from "sonner";
 interface ActionsPorps {
   isFollowing: boolean;
   userId: string;
+  isblocked: boolean;
 }
 
-export default function Actions({ isFollowing, userId }: ActionsPorps) {
+export default function Actions({ isFollowing, userId, isblocked}: ActionsPorps) {
   const [isPending, startTransition] = useTransition();
 
   function handleFollow() {
@@ -49,18 +50,35 @@ export default function Actions({ isFollowing, userId }: ActionsPorps) {
 
   function handleBlock(){
     startTransition(() => {
-      onUnblock(userId)
-      .then((data) => toast.success(`unBlocked User ${data.blocked.username}`))
+      onBlock(userId)
+      .then((data) => toast.success(`Blocked User ${data.blocked.username}`))
       .catch(() => toast.error('something went wrong'))
     })
+  }
+
+  function handleUnBlock() {
+    startTransition(() => {
+      onUnblock(userId)
+      .then((data) => toast.success(`Unblocked User ${data.blocked.username}`))
+      .catch(() => toast.error('something went wrong'))
+    })
+  }
+
+  function handleBlocking(){
+    if(isblocked){
+      handleUnBlock()
+    }
+    else{
+      handleBlock();
+    }
   }
 
   return (
     <>
       <Button disabled={isPending} onClick={OnClick} variant="primay">
         {isFollowing ? "Unfollow" : "Follow"}
-      </Button>
-      <Button onClick={handleBlock} disabled={isPending}>unBlock</Button>
+      </Button>    
+      <Button onClick={handleBlocking} disabled={isPending}>{isblocked ? "Unblock" : "Block"}</Button>
     </>
   );
 }

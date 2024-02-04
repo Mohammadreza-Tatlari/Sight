@@ -31,7 +31,7 @@ export default async function UserPage({params}: UserPageProps) {
     <p>user Id {user.id}</p>
     <p>Is Following: {`${isFollowing}`}</p>
     <p>is Blocked: {`${isBlocked}`}</p>
-    <Actions isFollowing={isFollowing} userId={user.id} />
+    <Actions isFollowing={isFollowing} userId={user.id} isblocked={isBlocked} />
     </div>
     </>
   )
