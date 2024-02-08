@@ -18,7 +18,11 @@ export async function getFollowedUser() {
                 }
             },
             include: {
-                following: true
+                following: {
+                    include:{
+                        stream: true
+                    }
+                }
             }
         })
         return allFollowedUsers;

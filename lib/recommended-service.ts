@@ -45,6 +45,9 @@ export const getRecommended = async () => {
                     }
                 ]
             },
+            include:{
+                stream: true
+            },
             orderBy: {
                 createdAt: 'desc'
             }
@@ -53,6 +56,9 @@ export const getRecommended = async () => {
     //it shows all users even though no user is logged in
     else {
         users = await db.user.findMany({
+            include:{
+                stream: true
+            },
             orderBy: {
                 createdAt: 'asc',
             }
