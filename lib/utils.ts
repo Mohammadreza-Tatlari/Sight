@@ -5,6 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function stringColor (str: string){
+export function stringToColor (str: string){
   return stc(str);
 }

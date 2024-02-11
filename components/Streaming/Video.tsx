@@ -6,6 +6,7 @@ import { hostname } from "os";
 import OfflineVideo from "./OfflineVideo";
 import LoadingVideo from "./LoadingVideo";
 import LiveVideo from "./LiveVideo";
+import { Skeleton } from "../ui/skeleton";
 
 interface VideoProps{
     hostName: string;
@@ -35,4 +36,14 @@ export default function Video({hostName , hostIdentity}: VideoProps) {
         {content}
     </div>
   )
+}
+
+export function VideoSkeleton(){
+    return(
+        <>
+        <div className="aspect-video border-x border-background">
+            <Skeleton className="h-full w-full rounded-none"/>
+        </div>
+        </>
+    )
 }

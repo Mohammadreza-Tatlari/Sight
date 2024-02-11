@@ -9,12 +9,13 @@ import {
 } from "@livekit/components-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import ChatHeader from "./ChatHeader";
-import ChatForm from "./ChatForm";
-import ChatList from "./ChatList";
+import ChatHeader, { ChatHeaderSkeleton } from "./ChatHeader";
+import ChatForm, { ChatFormSkeleton } from "./ChatForm";
+import ChatList, { ChatListSkeleton } from "./ChatList";
+import ChatCommunity from "./ChatCommunity";
 
 interface ChatProps {
-  viewName: string;
+  viewerName: string;
   hostName: string;
   hostIdentity: string;
   isFollowing: boolean;
@@ -23,7 +24,7 @@ interface ChatProps {
   isChatFollowerOnly: boolean;
 }
 export default function Chat({
-  viewName,
+  viewerName,
   hostIdentity,
   hostName,
   isFollowing,
@@ -87,10 +88,26 @@ export default function Chat({
         )}
         {variant === chatVariant.COMMUNITY && (
             <>
-            <p>Community</p>
+            <ChatCommunity
+            viewerName={viewerName}
+            hostName={hostName}
+            isHidden={isHidden}
+            />
             </>
         )} 
       </div>
     </>
   );
+}
+
+export function ChatSkeleton() {
+  return(
+    <>
+    <div className="flex flex-col border-l border-b pt-0 h-[calc(100vh-80px)] border-2">
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
+    </div>
+    </>
+  )
 }
