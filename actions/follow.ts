@@ -8,7 +8,6 @@ import { revalidatePath } from 'next/cache';
 export const onFollow = async (id: string) => {
     try {
         const followedUser = await followUser(id);
-        console.log(followedUser);
 
         revalidatePath('/');
 

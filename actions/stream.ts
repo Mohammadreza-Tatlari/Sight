@@ -22,12 +22,13 @@ export async function updateStream(values: Partial<Stream>) {
 
         //defining which values need to be updated
         const validData = {
+            thumbnailUrl: values.thumbnailUrl,
             name: values.name,
             isChatEnabled: values.isChatEnabled,
             isChatFollowersOnly: values.isChatFollowersOnly,
             isChatDelayed: values.isChatDelayed,
         };
-        console.log("condition ofchat after update ,");
+        
         
         const stream = await db.stream.update({
             where: {

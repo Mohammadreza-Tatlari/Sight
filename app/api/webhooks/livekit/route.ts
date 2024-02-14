@@ -9,7 +9,7 @@ const receiver = new WebhookReceiver(
 );
 
 export async function POST(req: Request) {
-    console.log("OBS STARTEED WOOOOOW");
+    console.log("○○○ OBS POST REQUEST ○○c○");
 
     const body = await req.text();
     const headerPayload = headers();
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     const event = receiver.receive(body, authorization);
 
     if (event.event === "ingress_started") {
-        console.log("OBS STARTEEEEEEEEEEEEEEEEEEEEEEED");
+        console.log("○○○ OBS STARTED On Ingress ○○c○");
 
         await db.stream.update({
             where: {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         });
     }
     if (event.event === "ingress_ended") {
-        console.log("OBS ENDDDDDDDDDDDDDDED");
+        console.log("○○○ OBS ENDED ○○c○");
         await db.stream.update({
             where: {
                 ingressId: event.ingressInfo?.ingressId,
