@@ -6,7 +6,12 @@ export async function getUserByUsername(username:string) {
             username
         },
         include: {
-            stream: true
+            stream: true ,
+            _count:{
+                select:{
+                    followedBy: true
+                }
+            }
         }
     }
     )

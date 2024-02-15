@@ -43,7 +43,7 @@ export default function Header({
             imageUrl={imageUrl}
             username={hostName}
             size="lg"
-            isLive={true}
+            isLive={isLive}
             showBadge
           />
           <div className="space-y-1">
