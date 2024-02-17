@@ -1,14 +1,29 @@
 import { db } from "./db";
 
-export async function getUserByUsername(username:string) {
+export async function getUserByUsername(username: string) {
     const user = await db.user.findUnique({
-        where:{
+        where: {
             username
         },
-        include: {
-            stream: true ,
-            _count:{
-                select:{
+        select: {
+            id: true,
+            externalUserId: true,
+            username: true,
+            bio: true,
+            imageUrl: true,
+            stream: {
+                select: {
+                    id: true,
+                    isLive: true,
+                    isChatDelayed: true,
+                    isChatEnabled: true,
+                    isChatFollowersOnly: true,
+                    thumbnailUrl: true,
+                    name: true,
+                }
+            },
+            _count: {
+                select: {
                     followedBy: true
                 }
             }
@@ -20,10 +35,10 @@ export async function getUserByUsername(username:string) {
 }
 
 
-export async function getUserByUserId(id: string){
+export async function getUserByUserId(id: string) {
     const user = await db.user.findUnique({
-        where:{id},
-        include:{
+        where: { id },
+        include: {
             stream: true
         }
     })

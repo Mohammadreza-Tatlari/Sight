@@ -18,7 +18,7 @@ export default function Search() {
 
     const url = qs.stringifyUrl(
       {
-        url: "/Search",
+        url: "/search",
         query: { term: value },
       },
       { skipEmptyString: true }
