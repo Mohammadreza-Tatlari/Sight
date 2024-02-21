@@ -2,12 +2,19 @@
 import Thumbnail, { ThumbnailSkeleton } from "@/components/Thumbnail"
 import VerifiedMark from "@/components/VerifiedMark"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Stream, User } from "@prisma/client"
+import { User } from "@prisma/client"
 import { formatDistanceToNow } from "date-fns"
 import Link from "next/link"
 
 interface SearchResultCardProps{
-    data: Stream & {user: User}
+    data: {
+        id: string;
+    name: string;
+    thumbnailUrl: string | null;
+    isLive: boolean;
+    updatedAt: Date;
+    user: User;
+    }
 };
 
 export default function SearchResultCard({data}:SearchResultCardProps) {
